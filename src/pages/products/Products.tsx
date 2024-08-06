@@ -2,7 +2,7 @@ import { FaFilter, FaSearch } from "react-icons/fa";
 import { useGetAllProductsQuery } from "../../redux/features/products/productsApi";
 import ProductsSkeleton from "../../components/skeleton/ProductsSkeleton";
 import ProductCard from "../../components/product/ProductCard";
-import { TProduct } from "../../interfaces/products.interface";
+import { TProduct } from "../../interfaces/product.interface";
 import { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import ProductForm from "../../components/product/ProductForm";
@@ -67,9 +67,9 @@ const Products = () => {
 
   return (
     <>
-      <div className="navbar md:px-3">
+      <div className="navbar my-10 md:px-3">
         <div className="hidden md:flex md:navbar-start"></div>
-        <div className="flex justify-center my-5 navbar-start pl-[68px] md:pl-0 md:navbar-center">
+        <div className="flex justify-center navbar-start pl-[68px] md:pl-0 md:navbar-center">
           <form onSubmit={handleSubmit(onSearch)}>
             <div className="join">
               <div className="w-9/12 md:w-full">
@@ -99,7 +99,7 @@ const Products = () => {
               visibleModal
                 ? "scale-100 opacity-100"
                 : "scale-95 opacity-0 pointer-events-none"
-            } duration-500`}
+            } duration-200`}
             ref={modalRef}
           >
             <ProductForm
@@ -126,7 +126,7 @@ const Products = () => {
         </div>
       )}
       {totalPage && (
-        <div className="my-5 flex justify-center items-center">
+        <div className="my-10 flex justify-center items-center">
           <div className="join">
             <button
               onClick={() => setQueries({ ...queries, page: queries.page - 1 })}

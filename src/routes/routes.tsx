@@ -6,6 +6,7 @@ import Contact from "../pages/Contact";
 import ProductsManagement from "../pages/ProductsManagement";
 import Products from "../pages/products/Products";
 import Cart from "../pages/Cart";
+import ProductDetails from "../pages/products/ProductDetails";
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ export const router = createBrowserRouter([
       {
         path: "products",
         element: <Products />,
+      },
+      {
+        path: "products/:id",
+        element: <ProductDetails />,
       },
       {
         path: "about-us",

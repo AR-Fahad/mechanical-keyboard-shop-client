@@ -1,6 +1,7 @@
 import Rating from "react-rating";
-import { TProduct } from "../../interfaces/products.interface";
+import { TProduct } from "../../interfaces/product.interface";
 import { IoStar, IoStarOutline } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({ product }: { product: TProduct }) => {
   return (
@@ -35,9 +36,12 @@ const ProductCard = ({ product }: { product: TProduct }) => {
         </div>
       </div>
       <div className="card-actions px-8 py-4">
-        <button className="btn btn-sm bg-white border-[1.5px] border-black text-black w-full hover:bg-black hover:text-white hover:scale-105">
+        <Link
+          className="btn btn-sm bg-white border-[1.5px] border-black text-black w-full hover:bg-black hover:text-white hover:scale-105"
+          to={`/products/${product._id}`}
+        >
           Show Details
-        </button>
+        </Link>
       </div>
     </div>
   );
