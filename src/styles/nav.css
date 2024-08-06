@@ -1,0 +1,18 @@
+div > .active {
+  border-bottom: 3px solid white;
+  font-weight: 600;
+  /* text-decoration: underline;
+  text-underline-offset: 4px; */
+}
+
+div > a:hover {
+  font-weight: 600;
+}
+
+div > ul .active {
+  /* text-decoration: underline; */
+  background-color: white;
+  color: black;
+  padding-left: 3px;
+  font-weight: 600;
+}
