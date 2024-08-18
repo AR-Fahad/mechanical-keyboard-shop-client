@@ -4,7 +4,7 @@ This is the client-side code for KeyWorld, a modern e-commerce website for mecha
 
 ## Live URL
 
-Live URL = **[KeyWorld_Frontend](https://mechanical-keyboard-shop-client-nine.vercel.app/)**
+Live URL = https://mechanical-keyboard-shop-client-nine.vercel.app
 
 ## Features
 
