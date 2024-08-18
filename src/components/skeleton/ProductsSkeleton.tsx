@@ -1,8 +1,8 @@
 const ProductsSkeleton = () => {
   return (
-    <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-12 md:p-8 lg:p-4">
+    <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 p-2 md:p-8 lg:p-4">
       {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
-        <div key={num} className="card rounded-lg bg-slate-50 shadow-xl">
+        <div key={num} className="card rounded-lg bg-slate-50 shadow-lg">
           <figure className="px-4 pt-4">
             <div className="h-48 w-full rounded-md skeleton" />
           </figure>

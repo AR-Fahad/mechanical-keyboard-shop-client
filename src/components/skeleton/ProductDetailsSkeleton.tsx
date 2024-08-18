@@ -41,7 +41,9 @@ const ProductDetailsSkeleton = () => {
       <div className="p-1 md:p-5 lg:p-10 space-y-2">
         <div className="text-xl h-6 w-44 font-semibold skeleton"></div>
         <div className="h-5 w-[100%] skeleton"></div>
+        <div className="h-5 w-[75%] skeleton"></div>
         <div className="h-5 w-[50%] skeleton"></div>
+        <div className="h-5 w-[25%] skeleton"></div>
       </div>
     </>
   );

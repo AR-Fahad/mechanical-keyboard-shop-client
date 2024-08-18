@@ -1,7 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
-import keyWord from "../../assets/images/KeyWord-logo.png";
+import keyWorld from "../../assets/images/KeyWord-logo.png";
 import "../../styles/nav.css";
-import { IoCartOutline } from "react-icons/io5";
+import { useAppSelector } from "../../redux/hooks";
+import { useEffect } from "react";
 
 const Navbar = () => {
   const navLinks = (
@@ -17,6 +18,28 @@ const Navbar = () => {
       <NavLink to="/products-management">Products Management</NavLink>
     </>
   );
+
+  const cart = useAppSelector((state) => state.cart);
+
+  // console.log(cart);
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (cart?.length > 0) {
+        event.preventDefault();
+        const message =
+          "Are you sure you want to leave? Changes you made may not be saved.";
+        event.returnValue = message; // Standard way for most browsers
+        return message; // For some browsers (like older versions of Chrome)
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [cart]);
 
   return (
     <div className="navbar bg-black text-white">
@@ -47,7 +70,7 @@ const Navbar = () => {
         </div>
         <div>
           <Link to="/">
-            <img src={keyWord} alt="" className="w-32" />
+            <img src={keyWorld} alt="" className="w-32" />
           </Link>
         </div>
       </div>
@@ -55,10 +78,28 @@ const Navbar = () => {
         {navLinks}
       </div>
       <div className="navbar-end">
-        <Link to="/cart">
-          <div className="static p-2">
-            <IoCartOutline className="w-10 h-8" />
-            <div className="badge absolute top-3 right-2 font-semibold">0</div>
+        <Link className="mr-6" to="/cart">
+          <div className="indicator">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-[22px]"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+              />
+            </svg>
+            <span
+              className={`badge badge-sm indicator-item font-semibold ${
+                !cart.length && "hidden"
+              }`}
+            >
+              {cart.length}
+            </span>
           </div>
         </Link>
       </div>

@@ -1,12 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
-import Home from "../pages/Home";
-import About from "../pages/About";
 import App from "../App";
-import Contact from "../pages/Contact";
-import ProductsManagement from "../pages/ProductsManagement";
 import Products from "../pages/products/Products";
-import Cart from "../pages/Cart";
 import ProductDetails from "../pages/products/ProductDetails";
+import Cart from "../pages/Cart/Cart";
+import Checkout from "../pages/Cart/Checkout";
+import ProductsManagement from "../pages/ProductsManagement/ProductsManagement";
+import Contact from "../pages/Contact/Contact";
+import AddProduct from "../pages/ProductsManagement/AddProduct";
+import Home from "../pages/Home/Home";
+import About from "../pages/About/About";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +42,14 @@ export const router = createBrowserRouter([
       {
         path: "cart",
         element: <Cart />,
+      },
+      {
+        path: "checkout",
+        element: <Checkout />,
+      },
+      {
+        path: "add-product",
+        element: <AddProduct />,
       },
     ],
   },

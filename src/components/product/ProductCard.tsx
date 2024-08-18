@@ -5,23 +5,24 @@ import { Link } from "react-router-dom";
 
 const ProductCard = ({ product }: { product: TProduct }) => {
   return (
-    <div className="card rounded-lg bg-slate-50 shadow-xl">
+    <div className="card rounded-lg bg-slate-50 shadow-lg">
       <figure className="px-4 pt-4">
-        <img className="h-48 w-full rounded-md" src={product.image} alt="" />
+        <img className="h-48 w-full rounded-md" src={product?.image} alt="" />
       </figure>
       <div className="card-body">
         <h2 className="card-title h-16 w-full">
-          {product.name}{" "}
+          {product?.name}{" "}
           <span className="text-xs rounded-sm font-semibold py-[1px] px-1 bg-black text-white">
-            {product.brand}
+            {product?.brand}
           </span>
         </h2>
         <div className="flex justify-between items-center">
           <p>
-            Price: <span className="font-semibold">${product.price}</span>
+            Price: <span className="font-semibold">${product?.price}</span>
           </p>
           <p>
-            Available: <span className="font-semibold">{product.quantity}</span>
+            Available:{" "}
+            <span className="font-semibold">{product?.quantity}</span>
           </p>
         </div>
         <div>
@@ -30,15 +31,15 @@ const ProductCard = ({ product }: { product: TProduct }) => {
             className="text-lg"
             emptySymbol={<IoStarOutline />}
             fullSymbol={<IoStar />}
-            initialRating={product.rating}
+            initialRating={product?.rating}
             readonly
           />
         </div>
       </div>
       <div className="card-actions px-8 py-4">
         <Link
-          className="btn btn-sm bg-white border-[1.5px] border-black text-black w-full hover:bg-black hover:text-white hover:scale-105"
-          to={`/products/${product._id}`}
+          className="btn btn-sm bg-white border-[1.5px] border-black text-black w-full hover:bg-black hover:text-white hover:scale-105 hover:border-black"
+          to={`/products/${product?._id}`}
         >
           Show Details
         </Link>

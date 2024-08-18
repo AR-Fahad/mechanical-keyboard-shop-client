@@ -1,3 +1,4 @@
+import { TProduct } from "./../../../interfaces/product.interface";
 import { baseApi } from "../../api/baseApi";
 
 const productsApi = baseApi.injectEndpoints({
@@ -17,7 +18,7 @@ const productsApi = baseApi.injectEndpoints({
           params,
         };
       },
-      // providesTags: [{ type: "products" }],
+      providesTags: [{ type: "products" }],
     }),
     getSingleProduct: builder.query({
       query: (id: string) => {
@@ -26,9 +27,55 @@ const productsApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      // providesTags: [{ type: "product" }],
+      providesTags: [{ type: "product" }],
+    }),
+    orderProducts: builder.mutation({
+      query: (ordersBody: { orders: { _id: string; quantity: number }[] }) => {
+        return {
+          url: "/products/orders",
+          method: "POST",
+          body: ordersBody,
+        };
+      },
+      invalidatesTags: ["products", "product"],
+    }),
+    createProduct: builder.mutation({
+      query: (payload: TProduct) => {
+        return {
+          url: `/products/create-product`,
+          method: "POST",
+          body: payload,
+        };
+      },
+      invalidatesTags: ["products", "product"],
+    }),
+    updateProduct: builder.mutation({
+      query: ({ id, payload }: { id: string; payload: Partial<TProduct> }) => {
+        return {
+          url: `/products/${id}`,
+          method: "PATCH",
+          body: payload,
+        };
+      },
+      invalidatesTags: ["products", "product"],
+    }),
+    deleteProduct: builder.mutation({
+      query: (id: string) => {
+        return {
+          url: `/products/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["products", "product"],
     }),
   }),
 });
 
-export const { useGetAllProductsQuery, useGetSingleProductQuery } = productsApi;
+export const {
+  useGetAllProductsQuery,
+  useGetSingleProductQuery,
+  useOrderProductsMutation,
+  useCreateProductMutation,
+  useUpdateProductMutation,
+  useDeleteProductMutation,
+} = productsApi;

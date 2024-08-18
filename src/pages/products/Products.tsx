@@ -80,7 +80,7 @@ const Products = () => {
                 />
               </div>
               <div className="indicator">
-                <button className="btn btn-sm border-black border-[1.5px] join-item bg-black opacity-85 text-white hover:opacity-100 hover:bg-black hover:border-[1.5px] hover:border-black">
+                <button className="btn btn-sm border-black border-[1.5px] join-item bg-black opacity-90 text-white hover:opacity-100 hover:bg-black hover:border-[1.5px] hover:border-black">
                   <FaSearch />
                 </button>
               </div>
@@ -112,44 +112,50 @@ const Products = () => {
       </div>
       {isLoading ? (
         <ProductsSkeleton />
-      ) : !data.length ? (
-        <div className="mb-56">
-          <h3 className="text-2xl md:text-3xl text-black font-semibold ">
-            No Products Found
+      ) : !data?.length ? (
+        <div className="h-screen text-center">
+          <h3 className="mt-10 text-2xl md:text-3xl text-black font-semibold text-opacity-70">
+            No products found
           </h3>
         </div>
       ) : (
-        <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-12 md:p-8 lg:p-4">
+        <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 p-2 md:p-8 lg:p-4">
           {data?.map((product: TProduct, index: number) => (
             <ProductCard product={product} key={index} />
           ))}
         </div>
       )}
-      {totalPage && (
-        <div className="my-10 flex justify-center items-center">
-          <div className="join">
-            <button
-              onClick={() => setQueries({ ...queries, page: queries.page - 1 })}
-              className="join-item p-1 px-2 border-black border-[1.5px] bg-black text-white hover:bg-black hover:border-[1.5px] hover:border-black disabled:opacity-75"
-              disabled={queries.page <= 1}
-            >
-              « Previous
-            </button>
-            <button
-              className="join-item py-1 px-5 disabled:border-black disabled:bg-white disabled:border-[1.5px] disabled:text-black disabled:font-semibold disabled:border-x-0"
-              disabled
-            >
-              Page {queries.page}
-            </button>
-            <button
-              onClick={() => setQueries({ ...queries, page: queries.page + 1 })}
-              className="join-item p-1 px-2 border-black border-[1.5px] bg-black text-white hover:bg-black hover:border-[1.5px] hover:border-black disabled:opacity-75"
-              disabled={queries.page >= totalPage}
-            >
-              Next »
-            </button>
+      {totalPage && data?.length !== 0 && (
+        <>
+          <div className="my-10 flex justify-center items-center">
+            <div className="join">
+              <button
+                onClick={() =>
+                  setQueries({ ...queries, page: queries.page - 1 })
+                }
+                className="join-item p-1 px-2 border-black border-[1.5px] bg-black text-white hover:bg-black hover:border-[1.5px] hover:border-black disabled:opacity-75"
+                disabled={queries.page <= 1}
+              >
+                « Previous
+              </button>
+              <button
+                className="join-item py-1 px-5 disabled:border-black disabled:bg-white disabled:border-[1.5px] disabled:text-black disabled:font-semibold disabled:border-x-0"
+                disabled
+              >
+                Page {queries.page}
+              </button>
+              <button
+                onClick={() =>
+                  setQueries({ ...queries, page: queries.page + 1 })
+                }
+                className="join-item p-1 px-2 border-black border-[1.5px] bg-black text-white hover:bg-black hover:border-[1.5px] hover:border-black disabled:opacity-75"
+                disabled={queries.page >= totalPage}
+              >
+                Next »
+              </button>
+            </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );
