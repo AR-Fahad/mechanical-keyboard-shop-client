@@ -3,16 +3,18 @@ import CartItem from "../../components/Cart/CartItem";
 import { useAppSelector } from "../../redux/hooks";
 
 const Cart = () => {
-  const cart = useAppSelector((state) => state.cart);
+  const { cart } = useAppSelector((state) => state.cart);
   const orderSummery = {
     products: 0,
     totalPrice: 0,
   };
 
-  cart.forEach((cartItem) => {
-    orderSummery.products = orderSummery.products + cartItem.quantity;
-    orderSummery.totalPrice = orderSummery.totalPrice + cartItem.total;
-  });
+  if (cart && cart?.length) {
+    cart.forEach((cartItem) => {
+      orderSummery.products = orderSummery.products + cartItem.quantity;
+      orderSummery.totalPrice = orderSummery.totalPrice + cartItem.total;
+    });
+  }
 
   return (
     <div className="my-10">
@@ -28,7 +30,7 @@ const Cart = () => {
             All Items
           </h3>
           <div className="px-1 md:p-0 space-y-2">
-            {cart.map((item) => (
+            {cart?.map((item) => (
               <CartItem item={item} key={item.id} />
             ))}
           </div>

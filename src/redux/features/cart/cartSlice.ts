@@ -2,7 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TCart } from "../../../interfaces/cart.interface";
 import { toast } from "sonner";
 
-const initialState: TCart[] = [];
+const initialState: {
+  cart: TCart[];
+} = {
+  cart: [],
+};
 
 export const cartSlice = createSlice({
   name: "cart",
@@ -18,7 +22,7 @@ export const cartSlice = createSlice({
         price: number;
       }>
     ) => {
-      const isExists = state.find(
+      const isExists = state.cart.find(
         (product) => product.id === action.payload.id
       );
       if (isExists) {
@@ -38,31 +42,31 @@ export const cartSlice = createSlice({
           price: action.payload.price,
           total: action.payload.price,
         };
-        state.push(newProduct);
+        state.cart.push(newProduct);
       }
     },
     subtractFromCart: (state, action: PayloadAction<{ id: string }>) => {
-      const isExists = state.find(
+      const isExists = state.cart.find(
         (product) => product.id === action.payload.id
       );
       if (isExists && isExists.quantity > 1) {
         isExists.quantity--;
         isExists.total = isExists.price * isExists.quantity;
       } else {
-        state.map(
+        state.cart.map(
           (product, key) =>
-            product.id === action.payload.id && state.splice(key, 1)
+            product.id === action.payload.id && state.cart.splice(key, 1)
         );
       }
     },
     removeFromCart: (state, action: PayloadAction<{ id: string }>) => {
-      state.map(
+      state.cart.map(
         (product, key) =>
-          product.id === action.payload.id && state.splice(key, 1)
+          product.id === action.payload.id && state.cart.splice(key, 1)
       );
     },
     emptyCart: (state) => {
-      state.splice(0, state.length);
+      state.cart.splice(0, state.cart.length);
     },
   },
 });

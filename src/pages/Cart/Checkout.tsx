@@ -8,7 +8,7 @@ import { useOrderProductsMutation } from "../../redux/features/products/products
 
 const Checkout = () => {
   const [btnOn, setBtnOn] = useState(false);
-  const cart = useAppSelector((state) => state.cart);
+  const { cart } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
   const [orderProducts] = useOrderProductsMutation();
   const navigate = useNavigate();

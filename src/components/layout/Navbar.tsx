@@ -2,7 +2,6 @@ import { Link, NavLink } from "react-router-dom";
 import keyWorld from "../../assets/images/KeyWord-logo.png";
 import "../../styles/nav.css";
 import { useAppSelector } from "../../redux/hooks";
-import { useEffect } from "react";
 
 const Navbar = () => {
   const navLinks = (
@@ -19,27 +18,27 @@ const Navbar = () => {
     </>
   );
 
-  const cart = useAppSelector((state) => state.cart);
+  const { cart } = useAppSelector((state) => state.cart);
 
   // console.log(cart);
 
-  useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      if (cart?.length > 0) {
-        event.preventDefault();
-        const message =
-          "Are you sure you want to leave? Changes you made may not be saved.";
-        event.returnValue = message; // Standard way for most browsers
-        return message; // For some browsers (like older versions of Chrome)
-      }
-    };
+  // useEffect(() => {
+  //   const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+  //     if (cart && cart?.length) {
+  //       event.preventDefault();
+  //       const message =
+  //         "Are you sure you want to leave? Changes you made may not be saved.";
+  //       event.returnValue = message; // Standard way for most browsers
+  //       return message; // For some browsers (like older versions of Chrome)
+  //     }
+  //   };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
+  //   window.addEventListener("beforeunload", handleBeforeUnload);
 
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [cart]);
+  //   return () => {
+  //     window.removeEventListener("beforeunload", handleBeforeUnload);
+  //   };
+  // }, [cart]);
 
   return (
     <div className="navbar bg-black text-white">
@@ -95,10 +94,10 @@ const Navbar = () => {
             </svg>
             <span
               className={`badge badge-sm indicator-item font-semibold ${
-                !cart.length && "hidden"
+                !cart?.length && "hidden"
               }`}
             >
-              {cart.length}
+              {cart?.length}
             </span>
           </div>
         </Link>
