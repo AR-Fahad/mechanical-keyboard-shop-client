@@ -79,16 +79,16 @@ const UpdateProduct = ({ product }: { product: TProduct }) => {
           </form>
           <div className="mb-5">
             <img
-              className="w-1/2 md:w-[35%] lg:w-[25%] h-52 mx-auto"
+              className="w-1/2 md:w-[35%] lg:w-[25%] mx-auto"
               src={product?.image}
               alt=""
             />
           </div>
           <form onSubmit={handleSubmit(onUpdate)} action="">
-            <div className="grid grid-cols-1 font-normal gap-5 lg:grid-cols-2">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 font-normal">
               <div>
-                <label htmlFor="name" className="label">
-                  <span className="font-medium">Name</span>
+                <label htmlFor="name" className="label font-medium">
+                  Name
                 </label>
                 <input
                   type="text"
@@ -100,8 +100,8 @@ const UpdateProduct = ({ product }: { product: TProduct }) => {
                 />
               </div>
               <div>
-                <label htmlFor="brand" className="label">
-                  <span className="font-medium">Brand</span>
+                <label htmlFor="brand" className="label font-medium">
+                  Brand
                 </label>
                 <select
                   id="brand"
@@ -117,8 +117,8 @@ const UpdateProduct = ({ product }: { product: TProduct }) => {
                 </select>
               </div>
               <div>
-                <label htmlFor="quantity" className="label">
-                  <span className="font-medium">Quantity</span>
+                <label htmlFor="quantity" className="label font-medium">
+                  Quantity
                 </label>
                 <input
                   type="number"
@@ -147,9 +147,9 @@ const UpdateProduct = ({ product }: { product: TProduct }) => {
                   required
                 />
               </div>
-              <div className="col-span-2">
-                <label htmlFor="description" className="label">
-                  <span className="font-medium">Description</span>
+              <div className="lg:col-span-2">
+                <label htmlFor="description" className="label font-medium">
+                  Description
                 </label>
                 <textarea
                   id="description"
