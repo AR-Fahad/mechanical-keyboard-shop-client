@@ -36,7 +36,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="relative w-full overflow-hidden">
+    <div className="relative w-full h-[190px] md:h-[350px] lg:h-[500px] overflow-hidden">
       <div className="space-x-2 absolute z-10 bottom-4 right-3">
         <button
           onClick={() => {
