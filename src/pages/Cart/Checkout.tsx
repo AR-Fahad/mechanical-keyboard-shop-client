@@ -83,13 +83,13 @@ const Checkout = () => {
   }, [cart, navigate]);
 
   return (
-    <div className="my-10 sm:w-10/12 md:w-8/12 lg:w-6/12 mx-auto">
+    <div className="my-10 w-full md:w-8/12 lg:w-6/12 mx-auto">
       <h3 className="text-2xl text-center mb-5 text-black font-bold">
         Checkout
       </h3>
       <form
         onSubmit={handleSubmit}
-        className="p-2 md:p-5 space-y-5 border shadow-xl rounded-md"
+        className="p-1 md:p-5 space-y-5 md:border md:shadow-xl md:rounded-md"
       >
         <h3 className="font-bold">Customer Information</h3>
         <div>
