@@ -2,70 +2,84 @@ import { Link, NavLink } from "react-router-dom";
 import keyWorld from "../../assets/images/KeyWord-logo.png";
 import "../../styles/nav.css";
 import { useAppSelector } from "../../redux/hooks";
+import { useState } from "react";
 
 const Navbar = () => {
+  const [menu, setMenu] = useState(false);
+
+  const openMenu = () => setMenu(true);
+  const closeMenu = () => setMenu(false);
+
   const navLinks = (
     <>
-      <NavLink to="/">Home</NavLink>
+      <NavLink onClick={closeMenu} to="/">
+        Home
+      </NavLink>
 
-      <NavLink to="/products">Products</NavLink>
+      <NavLink onClick={closeMenu} to="/products">
+        Products
+      </NavLink>
 
-      <NavLink to="/about-us">About Us</NavLink>
+      <NavLink onClick={closeMenu} to="/about-us">
+        About Us
+      </NavLink>
 
-      <NavLink to="/contact-us">Contact Us</NavLink>
+      <NavLink onClick={closeMenu} to="/contact-us">
+        Contact Us
+      </NavLink>
 
-      <NavLink to="/products-management">Products Management</NavLink>
+      <NavLink onClick={closeMenu} to="/products-management">
+        Products Management
+      </NavLink>
     </>
   );
 
   const { cart } = useAppSelector((state) => state.cart);
 
-  // console.log(cart);
-
-  // useEffect(() => {
-  //   const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-  //     if (cart && cart?.length) {
-  //       event.preventDefault();
-  //       const message =
-  //         "Are you sure you want to leave? Changes you made may not be saved.";
-  //       event.returnValue = message; // Standard way for most browsers
-  //       return message; // For some browsers (like older versions of Chrome)
-  //     }
-  //   };
-
-  //   window.addEventListener("beforeunload", handleBeforeUnload);
-
-  //   return () => {
-  //     window.removeEventListener("beforeunload", handleBeforeUnload);
-  //   };
-  // }, [cart]);
-
   return (
     <div className="navbar bg-black text-white">
       <div className="navbar-start">
-        <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+        <div className="drawer lg:hidden">
+          <input
+            id="my-drawer-2"
+            type="checkbox"
+            className={`${menu && "drawer-toggle"} hidden`}
+          />
+          <div className="drawer-content">
+            {/* Page content here */}
+            <label
+              onClick={openMenu}
+              htmlFor="my-drawer-2"
+              role="button"
+              className="btn btn-ghost drawer-button lg:hidden"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
-            </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />
+              </svg>
+            </label>
           </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-black rounded-box z-[1] mt-3 w-52 p-2 shadow lg:hidden"
-          >
-            {navLinks}
-          </ul>
+          <div className={`drawer-side z-50`}>
+            <label
+              htmlFor="my-drawer-2"
+              aria-label="close sidebar"
+              className="drawer-overlay"
+            ></label>
+            <ul className="menu bg-black text-white min-h-full w-64 md:w-80 p-4">
+              {/* Sidebar content here */}
+              {navLinks}
+            </ul>
+          </div>
         </div>
         <div>
           <Link to="/">

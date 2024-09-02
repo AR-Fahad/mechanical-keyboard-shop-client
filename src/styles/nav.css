@@ -14,5 +14,6 @@ div > ul .active {
   background-color: white;
   color: black;
   padding-left: 3px;
-  font-weight: 600;
+  font-weight: 700;
+  border-radius: 1.5px;
 }
