@@ -43,7 +43,8 @@ const Navbar = () => {
           <input
             id="my-drawer-2"
             type="checkbox"
-            className={`${menu && "drawer-toggle"} hidden`}
+            checked={menu}
+            className="drawer-toggle"
           />
           <div className="drawer-content">
             {/* Page content here */}
@@ -51,7 +52,7 @@ const Navbar = () => {
               onClick={openMenu}
               htmlFor="my-drawer-2"
               role="button"
-              className="btn btn-ghost drawer-button lg:hidden"
+              className="btn btn-ghost"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -74,6 +75,7 @@ const Navbar = () => {
               htmlFor="my-drawer-2"
               aria-label="close sidebar"
               className="drawer-overlay"
+              onClick={closeMenu}
             ></label>
             <ul className="menu bg-black text-white min-h-full w-64 md:w-80 p-4">
               {/* Sidebar content here */}
