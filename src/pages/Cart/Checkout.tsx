@@ -5,9 +5,13 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { useNavigate } from "react-router-dom";
 import { emptyCart } from "../../redux/features/cart/cartSlice";
 import { useOrderProductsMutation } from "../../redux/features/products/productsApi";
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 
 const Checkout = () => {
   const [btnOn, setBtnOn] = useState(false);
+  const [method, setMethod] = useState("");
+  const stripe = useStripe();
+  const elements = useElements();
   const { cart } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
   const [orderProducts] = useOrderProductsMutation();
@@ -31,23 +35,44 @@ const Checkout = () => {
     event.preventDefault();
     setBtnOn(true);
     const toastId = toast.loading("Order is under processing");
-    const method = (
-      event.currentTarget.elements.namedItem("method") as HTMLInputElement
-    ).value;
-    if (method === "Stripe") {
-      toast.error("Stripe method is not implement yet", { id: toastId });
-      setBtnOn(false);
-    } else {
-      try {
-        await orderProducts(ordersBody).unwrap();
-        toast.success("order placed successfully", { id: toastId });
-        dispatch(emptyCart());
-        setBtnOn(false);
-      } catch (err: any) {
-        // console.log(err);
-        toast.error("Something went wrong", { id: toastId });
-        setBtnOn(false);
+
+    try {
+      if (method === "Stripe") {
+        if (!stripe || !elements) {
+          toast.error("Something went wrong", { id: toastId });
+          setBtnOn(false);
+          return;
+        }
+
+        const cardElement = elements.getElement(CardElement);
+
+        if (!cardElement) {
+          toast.error("Card element not found.", { id: toastId });
+          setBtnOn(false);
+          return;
+        }
+
+        const { error } = await stripe.createPaymentMethod({
+          type: "card",
+          card: cardElement,
+        });
+
+        if (error) {
+          toast.error(error.message || "An error occurred", { id: toastId });
+          setBtnOn(false);
+          return;
+        }
+        // console.log(paymentMethod);
       }
+
+      await orderProducts(ordersBody).unwrap();
+      toast.success("Order placed successfully", { id: toastId });
+      dispatch(emptyCart());
+      setBtnOn(false);
+    } catch (err: any) {
+      // console.log(err);
+      toast.error("Something went wrong", { id: toastId });
+      setBtnOn(false);
     }
   };
 
@@ -59,17 +84,17 @@ const Checkout = () => {
 
   return (
     <div className="my-10 sm:w-10/12 md:w-8/12 lg:w-6/12 mx-auto">
-      <h3 className="text-2xl text-center mb-5 text-black font-semibold">
+      <h3 className="text-2xl text-center mb-5 text-black font-bold">
         Checkout
       </h3>
       <form
         onSubmit={handleSubmit}
         className="p-2 md:p-5 space-y-5 border shadow-xl rounded-md"
       >
-        <h3 className="font-semibold">Customer Information</h3>
+        <h3 className="font-bold">Customer Information</h3>
         <div>
           <label className="input input-sm md:input-md input-bordered flex items-center gap-2">
-            <span className="w-12 font-medium">Name</span>
+            <span className="w-12 font-semibold">Name</span>
             <input
               type="text"
               className="grow"
@@ -80,7 +105,7 @@ const Checkout = () => {
         </div>
         <div>
           <label className="input input-sm md:input-md input-bordered flex items-center gap-2">
-            <span className="w-12 font-medium">Email</span>
+            <span className="w-12 font-semibold">Email</span>
             <input
               type="email"
               className="grow"
@@ -91,7 +116,7 @@ const Checkout = () => {
         </div>
         <div>
           <label className="input input-sm md:input-md input-bordered flex items-center gap-2">
-            <span className="w-12 font-medium">Phone</span>
+            <span className="w-12 font-semibold">Phone</span>
             <input
               type="text"
               className="grow"
@@ -102,7 +127,7 @@ const Checkout = () => {
         </div>
         <div>
           <label className="flex flex-col gap-1">
-            <span className="font-medium text-sm pl-2 w-16">Address</span>
+            <span className="font-semibold text-sm pl-2 w-16">Address</span>
             <textarea
               className="grow h-24 textarea textarea-bordered"
               placeholder="Enter your address"
@@ -119,13 +144,16 @@ const Checkout = () => {
           </h3>
         </div>
         <div>
-          <h3 className="font-medium">Select Payment Method</h3>
+          <h3 className="font-semibold">Select Payment Method</h3>
           <div className="form-control">
             <label className="label cursor-pointer">
               <span className="label-text">Stripe</span>
               <input
                 type="radio"
                 name="method"
+                onChange={(e) => {
+                  setMethod(e.target.value);
+                }}
                 value="Stripe"
                 className="radio border-[1.5px] checked:bg-black checked:opacity-80 checked:border-[1.5px]"
                 required
@@ -138,12 +166,45 @@ const Checkout = () => {
               <input
                 type="radio"
                 name="method"
+                onChange={(e) => {
+                  setMethod(e.target.value);
+                }}
                 className="radio border-[1.5px] checked:border-[1.5px] checked:bg-black checked:opacity-80"
                 value="Cash on delivery"
                 required
               />
             </label>
           </div>
+
+          {method === "Stripe" && (
+            <div className="form-control mt-2">
+              <label
+                htmlFor="card-container"
+                className="label cursor-pointer font-bold"
+              >
+                Card Information
+              </label>
+              <div className="px-2">
+                <CardElement
+                  id="card-container"
+                  options={{
+                    style: {
+                      base: {
+                        fontSize: "16px",
+                        color: "#424770",
+                        "::placeholder": {
+                          color: "#aab7c4",
+                        },
+                      },
+                      invalid: {
+                        color: "#9e2146",
+                      },
+                    },
+                  }}
+                />
+              </div>
+            </div>
+          )}
         </div>
         <div className="py-5 text-right">
           <input
